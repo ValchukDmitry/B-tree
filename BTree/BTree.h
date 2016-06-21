@@ -4,7 +4,7 @@
 
 #ifndef B_TREE_BTREE_H
 #define B_TREE_BTREE_H
-
+template <class T>
 class BTree {
 
 };
