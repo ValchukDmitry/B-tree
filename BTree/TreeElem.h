@@ -14,10 +14,31 @@ public:
         n = 0;
     }
 
+
+    bool isLeaf() const {
+        return leaf;
+    }
+
+    void setLeaf(bool leaf) {
+        TreeElem::leaf = leaf;
+    }
+
+    int getN() const {
+        return n;
+    }
+
+    const std::vector<T> &getKeys() const {
+        return keys;
+    }
+
+    const std::vector<TreeElem *> &getChilds() const {
+        return childs;
+    }
+
 private:
-    bool isLeaf;
+    bool leaf;
     int n;
-    std::vector<T> key;
+    std::vector<T> keys;
     std::vector<TreeElem *> childs;
 };
 
