@@ -35,7 +35,7 @@ public:
         return childs;
     }
 
-    TreeElem * getChild(int i) {
+    TreeElem *getChild(int i) {
         return childs[i];
     }
 
@@ -43,9 +43,23 @@ public:
         return keys[i];
     }
 
-    void addKey(T key) {
+    void addKey(T key, TreeElem *treeElem) {
         n++;
-        keys.push_back(key);
+        for (int i = 0; i < n; i++) {
+            if (keys[i] < key) {
+                keys.push_back(keys[n - 1]);
+                childs.push_back(childs[childs.size() - 1]);
+                for (int g = i; g < keys.size(); g++) {
+                    keys[g + 1] = keys[g];
+                }
+                for (int g = i; g < childs.size(); g++) {
+                    childs[g + 1] = childs[g];
+                }
+                keys[i] = key;
+                childs[i] = treeElem;
+                break;
+            }
+        }
     }
 
 
