@@ -7,7 +7,10 @@
 template<class T>
 class BTree {
 public:
-    BTree();
+    BTree() {
+        size = 0;
+        root = nullptr;
+    }
 
     ~BTree();
 
@@ -15,7 +18,18 @@ public:
 
     BTree &operator=(const BTree &operandTree);
 
-    bool searchElement(const T value);
+    bool searchElement(const T value) {
+        for (int i = 0; i < root->getN(); i++) {
+            if (value == root->getKey(i)) {
+                return true;
+            }
+            if (value < root->getKey(i)) {
+                root = root->getChild(i);
+                searchElement(value);
+            }
+            return false;
+        }
+    }
 
     void insertElement(T value) {
 
@@ -23,17 +37,25 @@ public:
 
     void deleteElement(T &value);
 
-    friend std::istream &operator<<(std::istream &in, BTree &tree);//print tree in ascending order of elements
+    friend std::ostream &operator<<(std::ostream &out, BTree &tree) { //print tree in ascending order of elements
+        return out;
+    }
 
     friend std::istream &operator>>(std::istream &in, BTree &tree);
 
-    bool isTreeEmpty(const BTree &operandTree);
+    bool isTreeEmpty(const BTree &operandTree) {
+        return !(bool)(size);
+    }
 
     void cleanTree(BTree &operandTree); // tree cleaning
 
-    int getOrder(const BTree &operandTree);
+    int getOrder() const {
+        return t;
+    }
 
-    int getSize(const BTree &operandTree);
+    int getSize() const {
+        return size;
+    }
 
 private:
     int t; //b-tree order

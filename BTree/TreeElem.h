@@ -3,6 +3,7 @@
 //
 
 #include "vector"
+#include <iostream>
 
 #ifndef B_TREE_TREEELEM_H
 #define B_TREE_TREEELEM_H
@@ -57,9 +58,18 @@ public:
         TreeElem::parent = parent;
     }
 
+    friend std::ostream &operator<<(std::ostream &out, TreeElem &treeElem) {
+
+            if (treeElem.isLeaf()) {
+                for (int i = treeElem.getN(); i > 0; i--) {
+
+                }
+            }
+    }
+
 private:
     bool leaf;
-    int n;
+    int n; // количество детей, на 1 меньше, чем ключей
     std::vector<T> keys;
     std::vector<TreeElem *> childs;
     TreeElem *parent;
