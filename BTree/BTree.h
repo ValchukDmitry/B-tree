@@ -19,8 +19,20 @@ public:
 //    BTree<T>(const BTree<T> &operandTree);
 //
 //    BTree<T> &operator=(const BTree<T> &operandTree);
-//
-//    bool searchElement(const T value);
+
+
+    bool searchElement(const T value) {
+        for (int i = 0; i < root->getN(); i++) {
+            if (value == root->getKey(i)) {
+                return true;
+            }
+            if (value < root->getKey(i)) {
+                root = root->getChild(i);
+                searchElement(value);
+            }
+            return false;
+        }
+    }
 
     void insertElement(T value) {
         TreeElem<T> *bufElem = root;
@@ -49,13 +61,32 @@ public:
 //
 //    friend std::istream &operator>>(std::istream &in, BTree<T> &tree);
 
-//    bool isTreeEmpty(const BTree<T> &operandTree);
-//
 //    void cleanTree(BTree<T> &operandTree); // tree cleaning
 //
 //    int getOrder(const BTree<T> &operandTree);
 //
 //    int getSize(const BTree<T> &operandTree);
+
+
+    friend std::ostream &operator<<(std::ostream &out, BTree &tree) { //print tree in ascending order of elements
+        return out;
+    }
+
+//    friend std::istream &operator>>(std::istream &in, BTree &tree);
+
+    bool isTreeEmpty(const BTree &operandTree) {
+        return !(bool)(size);
+    }
+
+//    void cleanTree(BTree &operandTree); // tree cleaning
+
+    int getOrder() const {
+        return t;
+    }
+
+    int getSize() const {
+        return size;
+    }
 
 private:
     int t; //b-tree order
