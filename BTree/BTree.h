@@ -1,6 +1,10 @@
 #ifndef B_TREE_BTREE_H
 #define B_TREE_BTREE_H
-template <class T>
+
+#include <iostream>
+#include "TreeElem.h"
+
+template<class T>
 class BTree {
 public:
     BTree();
@@ -11,28 +15,29 @@ public:
 
     BTree &operator=(const BTree &operandTree);
 
-    bool searchElement(const BTree &operandTree);
+    bool searchElement(const T value);
 
-    void insertElement(BTree &operandTree);
+    void insertElement(T value) {
 
-    void deleteElement(BTree &operandTree);
+    }
 
-    void printTree (const BTree &operandTree);//print tree in ascending order of elements
+    void deleteElement(T &value);
 
-    void inputElemntFromStream (BTree &operandTree);//input from the stream
+    friend std::istream &operator<<(std::istream &in, BTree &tree);//print tree in ascending order of elements
 
-    bool isTreeEmpty (const BTree &operandTree);
+    friend std::istream &operator>>(std::istream &in, BTree &tree);
 
-    void cleanTree (BTree &operandTree); // tree cleaning
+    bool isTreeEmpty(const BTree &operandTree);
 
-    int getOrder (const BTree &operandTree);
+    void cleanTree(BTree &operandTree); // tree cleaning
 
-    int getSize (const BTree &operandTree);
+    int getOrder(const BTree &operandTree);
+
+    int getSize(const BTree &operandTree);
 
 private:
     int t; //b-tree order
-    int size;
-    //tree height
+    int size; //tree size
     TreeElem *root; //root of tree
 };
 
