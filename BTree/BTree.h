@@ -7,15 +7,20 @@
 template<class T>
 class BTree {
 public:
-    BTree();
+    BTree<T>(int t) {
+        this->t = t;
+        root = new TreeElem<T>;
+        root->setLeaf(true);
+        size = 0;
+    }
 
-    ~BTree();
-
-    BTree(const BTree &operandTree);
-
-    BTree &operator=(const BTree &operandTree);
-
-    bool searchElement(const T value);
+//    ~BTree<T>();
+//
+//    BTree<T>(const BTree<T> &operandTree);
+//
+//    BTree<T> &operator=(const BTree<T> &operandTree);
+//
+//    bool searchElement(const T value);
 
     void insertElement(T value) {
         TreeElem<T> *bufElem = root;
@@ -27,30 +32,37 @@ public:
             }
         }
         if (bufElem->getN() == 2 * t - 1) {
-
+            splitVertex(bufElem);
+            bufElem = bufElem->getParent();
+            int i = 0;
+            for (; (i < bufElem->getN()) && bufElem->getKey(i) < value; i++);
+            if (i > 0) {
+                bufElem = bufElem->getChild(i);
+            }
         }
+        bufElem->addKey(value);
     }
 
-    void deleteElement(T &value);
+//    void deleteElement(T &value);
 
-    friend std::istream &operator<<(std::istream &in, BTree &tree);//print tree in ascending order of elements
+//    friend std::istream &operator<<(std::istream &in, BTree<T> &tree);//print tree in ascending order of elements
+//
+//    friend std::istream &operator>>(std::istream &in, BTree<T> &tree);
 
-    friend std::istream &operator>>(std::istream &in, BTree &tree);
-
-    bool isTreeEmpty(const BTree &operandTree);
-
-    void cleanTree(BTree &operandTree); // tree cleaning
-
-    int getOrder(const BTree &operandTree);
-
-    int getSize(const BTree &operandTree);
+//    bool isTreeEmpty(const BTree<T> &operandTree);
+//
+//    void cleanTree(BTree<T> &operandTree); // tree cleaning
+//
+//    int getOrder(const BTree<T> &operandTree);
+//
+//    int getSize(const BTree<T> &operandTree);
 
 private:
     int t; //b-tree order
     int size; //tree size
-    TreeElem *root; //root of tree
+    TreeElem<T> *root; //root of tree
 
-    void splitVertex(TreeElem *elem) {
+    void splitVertex(TreeElem<T> *elem) {
         T value = elem->getKey(((2 * t - 1) / 2) + 1);
         if (elem->getParent()->getN() == 2 * t - 1) {
             if (elem->getParent() == 0) {
@@ -70,7 +82,7 @@ private:
         newVertex->addChild(elem->getChild(g));
     }
 
-    void splitRoot(TreeElem *elem) {
+    void splitRoot(TreeElem<T> *elem) {
         T value = elem->getKey((2 * t - 1) / 2 + 1);
         TreeElem<T> *newRoot = new TreeElem<T>;
         newRoot->addKey(value, root);

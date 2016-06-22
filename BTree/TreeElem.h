@@ -45,6 +45,7 @@ public:
 
     void addKey(T key, TreeElem *treeElem) {
         n++;
+        bool isLast = true;
         for (int i = 0; i < n; i++) {
             if (keys[i] < key) {
                 keys.push_back(keys[n - 1]);
@@ -57,8 +58,13 @@ public:
                 }
                 keys[i + 1] = key;
                 childs[i] = treeElem;
+                isLast = false;
                 break;
             }
+        }
+        if (isLast) {
+            keys.push_back(key);
+            childs.push_back(treeElem);
         }
     }
 
@@ -78,6 +84,25 @@ public:
 
     void addChild(TreeElem *treeElem) {
         childs.push_back(treeElem);
+    }
+
+    void addKey(T key) {
+        int i = 0;
+        bool isLast = true;
+        for (i = 0; i < n; i++) {
+            if (keys[i] < key) {
+                keys.push_back(keys[n - 1]);
+                for (int g = i; g < keys.size(); g++) {
+                    keys[g + 1] = keys[g];
+                }
+                isLast = false;
+                break;
+            }
+        }
+        if (isLast) {
+            keys.push_back(key);
+        }
+        n++;
     }
 
     void removeChild(TreeElem *treeElem) {
