@@ -52,16 +52,46 @@ public:
                 for (int g = i; g < keys.size(); g++) {
                     keys[g + 1] = keys[g];
                 }
-                for (int g = i; g < childs.size(); g++) {
+                for (int g = i + 1; g < childs.size(); g++) {
                     childs[g + 1] = childs[g];
                 }
-                keys[i] = key;
+                keys[i + 1] = key;
                 childs[i] = treeElem;
                 break;
             }
         }
     }
 
+    void removeKey(T key) {
+        int i = 0;
+        for (i = 0; i < n; i++) {
+            if (keys[i] == key) {
+                break;
+            }
+        }
+        for (; i < n; i++) {
+            keys[i] = keys[i + 1];
+        }
+        keys.pop_back();
+        n--;
+    }
+
+    void addChild(TreeElem *treeElem) {
+        childs.push_back(treeElem);
+    }
+
+    void removeChild(TreeElem *treeElem) {
+        int i = 0;
+        for (i = 0; i < childs.size(); i++) {
+            if (childs[i] == treeElem) {
+                break;
+            }
+        }
+        for (; i < childs.size(); i++) {
+            childs[i] = childs[i + 1];
+        }
+        childs.pop_back();
+    }
 
     TreeElem *getParent() const {
         return parent;
