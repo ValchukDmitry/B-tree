@@ -35,11 +35,34 @@ public:
         return childs;
     }
 
+    TreeElem * getChild(int i) {
+        return childs[i];
+    }
+
+    const T getKey(int i) const {
+        return keys[i];
+    }
+
+    void addKey(T key) {
+        n++;
+        keys.push_back(key);
+    }
+
+
+    TreeElem *getParent() const {
+        return parent;
+    }
+
+    void setParent(TreeElem *parent) {
+        TreeElem::parent = parent;
+    }
+
 private:
     bool leaf;
     int n;
     std::vector<T> keys;
     std::vector<TreeElem *> childs;
+    TreeElem *parent;
 };
 
 
